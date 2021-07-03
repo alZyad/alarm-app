@@ -1,17 +1,17 @@
 import React from 'react'
 import { Text, Pressable, StyleSheet } from 'react-native'
-export default (props: {day: string}) => {
+export default (props: {day: string, key: number, isDayPress: any, setIsDayPress: any}) => {
 
-    const [ isDayPress, setIsDayPress ] = React.useState(false);
+    
     const handleDayPress = () => {
-        var isPressNew = isDayPress;
-        isPressNew = (!isDayPress);
-        setIsDayPress(isPressNew);
+        var isPressNew = props.isDayPress;
+        isPressNew = (!props.isDayPress);
+        props.setIsDayPress(isPressNew);
     }
 
     return (
-    <Pressable style= {isDayPress ? styles.btnPress : styles.btnNormal} onPress={handleDayPress}>
-        <Text style={isDayPress ? styles.btnTextPress : styles.btnTextNormal}>{props.day}</Text>
+    <Pressable style= {props.isDayPress ? styles.btnPress : styles.btnNormal} onPress={handleDayPress}>
+        <Text style={props.isDayPress ? styles.btnTextPress : styles.btnTextNormal}>{props.day}</Text>
     </Pressable>
     )
 }

@@ -7,6 +7,34 @@ export default (props: {alarm: any, key: number}) => {
     const week = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
     const [allWeek, setallWeek] = useState(false);
 
+    const handleAllWeek = () => {
+        if(allWeek){
+            setallWeek(false);
+            setIsMoPress(false);
+            setIsTuPress(false);
+            setIsWePress(false);
+            setIsThPress(false);
+            setIsFrPress(false);
+            setIsSaPress(false);
+            setIsSuPress(false);
+        } else {
+            setallWeek(true);
+            setIsMoPress(true);
+            setIsTuPress(true);
+            setIsWePress(true);
+            setIsThPress(true);
+            setIsFrPress(true);
+            setIsSaPress(true);
+            setIsSuPress(true);
+        }
+    };
+    const [ isMoPress, setIsMoPress ] = React.useState(false);
+    const [ isTuPress, setIsTuPress ] = React.useState(false);
+    const [ isWePress, setIsWePress ] = React.useState(false);
+    const [ isThPress, setIsThPress ] = React.useState(false);
+    const [ isFrPress, setIsFrPress ] = React.useState(false);
+    const [ isSaPress, setIsSaPress ] = React.useState(false);
+    const [ isSuPress, setIsSuPress ] = React.useState(false);
     return (
         <View style={styles.alarm}>
 
@@ -15,17 +43,24 @@ export default (props: {alarm: any, key: number}) => {
                     <Text style={styles.text}>
                         {props.alarm.time.slice(0,2)+":"+props.alarm.time.slice(2)}
                     </Text>
-                    <Pressable onPress={()=>{setallWeek(!allWeek);  }} style={styles.repeatPressable}>
-                        <Text style={styles.pressableText}>{allWeek ? "Repeat all week" : "Don't repeat"}</Text>
+                    <Pressable onPress={handleAllWeek} style={styles.repeatPressable}>
+                        <Text style={styles.pressableText}>{allWeek ? "Don't repeat" : "Repeat all week"}</Text>
                     </Pressable>
                 </View>
                 <View style={styles.week}>
-                    {week.map((day, index)=>
-                            <Day day={day} key={index} />
-                        )}
+                    <Day day={"Mo"} key={0} isDayPress={isMoPress} setIsDayPress={setIsMoPress} />
+                    <Day day={"Tu"} key={1} isDayPress={isTuPress} setIsDayPress={setIsTuPress}/>
+                    <Day day={"We"} key={2} isDayPress={isWePress} setIsDayPress={setIsWePress}/>
+                    <Day day={"Th"} key={3} isDayPress={isThPress} setIsDayPress={setIsThPress}/>
+                    <Day day={"Fr"} key={4} isDayPress={isFrPress} setIsDayPress={setIsFrPress}/>
+                    <Day day={"Sa"} key={5} isDayPress={isSaPress} setIsDayPress={setIsSaPress}/>
+                    <Day day={"Su"} key={6} isDayPress={isSuPress} setIsDayPress={setIsSuPress}/>
                 </View>
             </View>
-            <Switch thumbColor="#CA2E55" onValueChange={()=>{setActivated(!activated)}} value={activated} style={styles.switch}/>
+            <Switch thumbColor={activated?"#fff":"#000"} trackColor={{true: 'red', false: 'grey'}}
+                    onValueChange={()=>{setActivated(!activated)}} value={activated} style={styles.switch}
+            />
+ 
         </View>
     )
 }
@@ -34,10 +69,10 @@ export default (props: {alarm: any, key: number}) => {
 const styles = StyleSheet.create({
     alarm : {
         flexDirection: "row",
-        width: "90vw",
+        width: "100%",
         backgroundColor: "#333",
         padding: 20,
-        margin: 20,
+        marginVertical: 20,
         borderRadius: 20,
         alignItems: "center",
         justifyContent: "space-between",
